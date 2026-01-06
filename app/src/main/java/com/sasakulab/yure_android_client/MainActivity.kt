@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
 
     private lateinit var yureId: String
     private var isSharing = mutableStateOf(false)
-    private var statusText = mutableStateOf("準備完了")
+    private var statusText = mutableStateOf("Stop")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -104,7 +104,7 @@ class MainActivity : ComponentActivity() {
             startService(serviceIntent)
         }
         isSharing.value = true
-        statusText.value = "バックグラウンドで送信中"
+        statusText.value = "Sending in the background"
     }
 
     // Stop to share accelerometer data
@@ -112,7 +112,7 @@ class MainActivity : ComponentActivity() {
         val serviceIntent = Intent(this, YureSensorService::class.java)
         stopService(serviceIntent)
         isSharing.value = false
-        statusText.value = "停止しました"
+        statusText.value = "Stopped"
     }
 
     override fun onDestroy() {
@@ -241,7 +241,7 @@ fun ServerUrlDialog(
         title = { Text("WebSocket Server URL") },
         text = {
             Column {
-                Text("現在のURL: $currentUrl")
+                Text("Current URL: $currentUrl")
                 Spacer(modifier = Modifier.height(8.dp))
                 OutlinedTextField(
                     value = url,
@@ -258,12 +258,12 @@ fun ServerUrlDialog(
                 onClick = { onConfirm(url) },
                 enabled = url.isNotBlank()
             ) {
-                Text("保存")
+                Text("Save")
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("キャンセル")
+                Text("Cancel")
             }
         }
     )
@@ -283,7 +283,7 @@ fun BufferSizeDialog(
         title = { Text("Buffer Size") },
         text = {
             Column {
-                Text("現在のサイズ: $currentSize")
+                Text("Current Size: $currentSize")
                 Spacer(modifier = Modifier.height(8.dp))
                 OutlinedTextField(
                     value = sizeText,
@@ -296,7 +296,7 @@ fun BufferSizeDialog(
                 )
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    text = "バッファサイズは送信するデータの件数です",
+                    text = "Buffer size is the number of sample points sent",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
@@ -307,12 +307,12 @@ fun BufferSizeDialog(
                 onClick = { onConfirm(size) },
                 enabled = sizeText.toIntOrNull() != null && size > 0
             ) {
-                Text("保存")
+                Text("Save")
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("キャンセル")
+                Text("Cancel")
             }
         }
     )
