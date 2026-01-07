@@ -11,9 +11,11 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.sasakulab.yure_android_client"
-        minSdk = 26
-        targetSdk = 36
+        applicationId = "com.shintranet.yuredrold"
+        // Raise minSdk to 24 to support Android 7.0 (API 24)
+        minSdk = 24
+        // Keep targetSdk up-to-date to a modern level to get behavior and security improvements
+        targetSdk = 33
         versionCode = 1
         versionName = "1.2.0"
 
@@ -30,11 +32,13 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        // Use Java 1.8 compatibility for broader device support (Android 7)
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
-        jvmTarget = "11"
+        // Set Kotlin JVM target to 1.8 for compatibility with Java 8 desugaring
+        jvmTarget = "1.8"
     }
     buildFeatures {
         compose = true

@@ -60,7 +60,11 @@ class YureSensorService : Service(), SensorEventListener {
         // Start foreground service with notification
         val notification = createNotification()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-            startForeground(NOTIFICATION_ID, notification, android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
+            startForeground(
+                NOTIFICATION_ID,
+                notification,
+                android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
+            )
         } else {
             startForeground(NOTIFICATION_ID, notification)
         }
@@ -99,11 +103,18 @@ class YureSensorService : Service(), SensorEventListener {
 
     private fun createNotification(): Notification {
         val notificationIntent = Intent(this, MainActivity::class.java)
+
+        val pendingIntentFlags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            PendingIntent.FLAG_IMMUTABLE
+        } else {
+            0
+        }
+
         val pendingIntent = PendingIntent.getActivity(
             this,
             0,
             notificationIntent,
-            PendingIntent.FLAG_IMMUTABLE
+            pendingIntentFlags
         )
 
         return NotificationCompat.Builder(this, CHANNEL_ID)
