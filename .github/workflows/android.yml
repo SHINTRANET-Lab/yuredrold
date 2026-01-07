@@ -38,4 +38,3 @@ jobs:
           asset_name: yuredrold.apk
           tag: ${{ github.ref }}
           overwrite: true
-          body: "This is my release text"
