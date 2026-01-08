@@ -4,11 +4,11 @@
 
 ## これはなに
 
-[m-tsuru/yuredroid](github.com/m-tsuru/yuredroid) をSDKVersion 24(Android 7)に対応させたフォークです。
-GPT-5 miniによって改変されました。
-リニア加速度センサを使用します。無ければ加速度センサで代用しますが、正常に動作しません。
-また、このフォークはupstreamに大きな変更が無い限り変更がありません。
-古いAndroid向けのアプリケーションです。
+[m-tsuru/yuredroid](github.com/m-tsuru/yuredroid) をSDKVersion 24(Android 7)に対応させたフォークです。  
+GPT-5 miniによって改変されました。  
+リニア加速度センサを使用します。無ければ加速度センサで代用しますが、正常に動作しません。  
+また、このフォークはupstreamに大きな変更が無い限り変更がありません。  
+古いAndroid向けのアプリケーションです。  
 
 ## つかいかた
 
