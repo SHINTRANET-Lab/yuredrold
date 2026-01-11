@@ -205,7 +205,7 @@ class YureSensorService : Service(), SensorEventListener {
                     y = it.values[1].toDouble(),
                     z = it.values[2].toDouble(),
                     t = System.currentTimeMillis(),
-                    userAgent = String.format("yuredrold v%s on %s %s (Android %s)", packageManager.getPackageInfo(packageName, 0).versionName, Build.MANUFACTURER, Build.MODEL, Build.VERSION.RELEASE),
+                    userAgent = String.format("yuredrold v%s on %s %s , Android %s", packageManager.getPackageInfo(packageName, 0).versionName, Build.MANUFACTURER, Build.MODEL, Build.VERSION.RELEASE),
                 )
 
                 synchronized(bufferLock) {
