@@ -1,3 +1,4 @@
+// language: kotlin
 package com.sasakulab.yure_android_client
 
 import android.app.Notification
@@ -38,6 +39,11 @@ class YureSensorService : Service(), SensorEventListener {
     private var isConnected = false
     private var isReconnecting = false
 
+    // 追加: 重力推定用フィールド
+    private val gravity = FloatArray(3) { 0f }
+    // 0.8〜0.98 の範囲で調整可。大きいほど重力推定が遅く（安定）なる
+    private val GRAVITY_ALPHA = 0.8f
+
     private val reconnectHandler = android.os.Handler(android.os.Looper.getMainLooper())
     private val reconnectRunnable = object : Runnable {
         override fun run() {
@@ -64,7 +70,7 @@ class YureSensorService : Service(), SensorEventListener {
         sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION)
             ?: sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
-            
+
         // Acquire WakeLock to keep CPU running
         val powerManager = getSystemService(Context.POWER_SERVICE) as PowerManager
         wakeLock = powerManager.newWakeLock(
@@ -198,12 +204,32 @@ class YureSensorService : Service(), SensorEventListener {
 
     override fun onSensorChanged(event: SensorEvent?) {
         event?.let {
-            if (it.sensor.type == Sensor.TYPE_LINEAR_ACCELERATION || it.sensor.type == Sensor.TYPE_ACCELEROMETER) {
+            val sensorType = it.sensor.type
+            if (sensorType == Sensor.TYPE_LINEAR_ACCELERATION || sensorType == Sensor.TYPE_ACCELEROMETER) {
+                // If raw accelerometer, estimate gravity using low-pass filter and subtract it.
+                val linear = FloatArray(3)
+                if (sensorType == Sensor.TYPE_ACCELEROMETER) {
+                    // low-pass filter to estimate gravity: gravity = alpha * gravity + (1 - alpha) * accel
+                    gravity[0] = GRAVITY_ALPHA * gravity[0] + (1 - GRAVITY_ALPHA) * it.values[0]
+                    gravity[1] = GRAVITY_ALPHA * gravity[1] + (1 - GRAVITY_ALPHA) * it.values[1]
+                    gravity[2] = GRAVITY_ALPHA * gravity[2] + (1 - GRAVITY_ALPHA) * it.values[2]
+
+                    // subtract gravity to get linear acceleration
+                    linear[0] = it.values[0] - gravity[0]
+                    linear[1] = it.values[1] - gravity[1]
+                    linear[2] = it.values[2] - gravity[2]
+                } else {
+                    // TYPE_LINEAR_ACCELERATION already excludes gravity
+                    linear[0] = it.values[0]
+                    linear[1] = it.values[1]
+                    linear[2] = it.values[2]
+                }
+
                 val data = AccelerationData(
                     yureId = yureId,
-                    x = it.values[0].toDouble(),
-                    y = it.values[1].toDouble(),
-                    z = it.values[2].toDouble(),
+                    x = linear[0].toDouble(),
+                    y = linear[1].toDouble(),
+                    z = linear[2].toDouble(),
                     t = System.currentTimeMillis(),
                     userAgent = String.format("yuredrold v%s on %s %s (Android %s)", packageManager.getPackageInfo(packageName, 0).versionName, Build.MANUFACTURER, Build.MODEL, Build.VERSION.RELEASE),
                 )
@@ -275,7 +301,7 @@ class YureSensorService : Service(), SensorEventListener {
 
         sensorManager.unregisterListener(this)
         webSocket?.close(1000, "Service destroyed")
-        
+
         // Release WakeLock
         wakeLock?.let {
             if (it.isHeld) {
