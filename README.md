@@ -20,7 +20,9 @@ GPT-5 miniによって改変されました。
 
 2. アプリの中央の `Start` ボタンを押下する
 ## 動作確認済み端末
-- SONY Experia Z5(SO-01H) Android7
+- SONY Experia Z5(SO-01H) Android 7
+- STS-TOTTORI チャレンジタッチ3(TAB-A03-BR3) Android 7 ##Linear版のみ動作
+- Nothing Phone(2a) Plus(A142P) Android 16
 ## ライセンス
 
 ©️ 2026 Michiru Tsurumaru / MIT License
