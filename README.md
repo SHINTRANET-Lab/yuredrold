@@ -25,5 +25,4 @@ GPT-5 miniによって改変されました。
 - Nothing Phone(2a) Plus(A142P) Android 16
 ## ライセンス
 
-©️ 2026 Michiru Tsurumaru / MIT License
-©️ 2026 Taiga Takatani (Modified) 
+©️ 2026 Michiru Tsurumaru / KusaReMKN / Taiga Takatani (Modified) / MIT License
