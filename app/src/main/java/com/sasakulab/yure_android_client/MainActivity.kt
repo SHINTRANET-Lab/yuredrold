@@ -154,7 +154,7 @@ data class AccelerationData(
     val x: Double,
     val y: Double,
     val z: Double,
-    val t: Long,
+    val t: Double,
     val userAgent: String,
 )
 
