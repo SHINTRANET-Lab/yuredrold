@@ -154,7 +154,7 @@ data class AccelerationData(
     val x: Double,
     val y: Double,
     val z: Double,
-    val t: Double,
+    val t: Double, // 型を Double にする（Long からの変更）
     val userAgent: String,
 )
 

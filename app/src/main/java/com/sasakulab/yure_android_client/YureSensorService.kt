@@ -204,7 +204,7 @@ class YureSensorService : Service(), SensorEventListener {
                     x = it.values[0].toDouble(),
                     y = it.values[1].toDouble(),
                     z = it.values[2].toDouble(),
-                    t = System.currentTimeMillis(),
+                    t = System.currentTimeMillis().toDouble(), // Long -> Double に変換
                     userAgent = String.format("yuredrold v%s on %s %s , Android %s", packageManager.getPackageInfo(packageName, 0).versionName, Build.MANUFACTURER, Build.MODEL, Build.VERSION.RELEASE),
                 )
 
