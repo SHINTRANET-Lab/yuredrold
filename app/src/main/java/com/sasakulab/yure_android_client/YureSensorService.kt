@@ -42,7 +42,7 @@ class YureSensorService : Service(), SensorEventListener {
     // 追加: 重力推定用フィールド
     private val gravity = FloatArray(3) { 0f }
     // 0.8〜0.98 の範囲で調整可。大きいほど重力推定が遅く（安定）なる
-    private val GRAVITY_ALPHA = 0.89f
+    private val GRAVITY_ALPHA = 0.95f
 
     private val reconnectHandler = android.os.Handler(android.os.Looper.getMainLooper())
     private val reconnectRunnable = object : Runnable {

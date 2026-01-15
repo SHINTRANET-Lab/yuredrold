@@ -16,8 +16,8 @@ android {
         minSdk = 24
         // Keep targetSdk up-to-date to a modern level to get behavior and security improvements
         targetSdk = 33
-        versionCode = 8
-        versionName = "1.5.3-Linear"
+        versionCode = 9
+        versionName = "1.5.4-Linear"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
